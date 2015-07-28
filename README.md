@@ -85,26 +85,28 @@ In our program there is full support three-dimensional segmentation of data. In 
 
 As mentioned above, the typical dimensions of the problem are:
 
+![nxnynz](https://github.com/GeorgePapageorgakis/Atmospheric-model-MPI/blob/master/figures/nxnynz.jpg)
+
 Let's define and counterparts of segmentation units, namely those that exist in each MPI process:
 
-![nxnynz]()
+![xyz](https://github.com/GeorgePapageorgakis/Atmospheric-model-MPI/blob/master/figures/xyz.jpg)
 
 Processing times are:
 
-![Tc]( )
+![Tc](https://github.com/GeorgePapageorgakis/Atmospheric-model-MPI/blob/master/figures/Tc.jpg)
 
 where **internal** are the elements that do not require previous communication to calculate and the rest busywait / external.
 
 Considering the network processor has sufficient capacity in relation to our needs, we will assume that all communications may be done in parallel. Therefore, the communication time will not be equal to the set of messages, but with the maximum message:
 
-![Tcomm]( )
+![Tcomm](https://github.com/GeorgePapageorgakis/Atmospheric-model-MPI/blob/master/figures/Tcomm.jpg)
 
 where ts is the time constant of each message, tw the message time per byte, 3 is the number of doubles in our struct, and 8 is the sizeof(double).
 
 The calculation of processing and communication time, in the non-blocking communication, starts immediately. The calculation of internal data follows, then there are
 MPI_Wait to calculate the rest. Thus, the internal processing time spans a portion of the communication time:
 
-![T]( )
+![T](https://github.com/GeorgePapageorgakis/Atmospheric-model-MPI/blob/master/figures/T.jpg)
 
 At this point the parallel communication and computation makes a further theoretical calculation (speedup and efficiency) difficult. We shall confine ourselves to comparing the theoretical time with the sampled time.
 
@@ -114,7 +116,7 @@ Therefore, we try to reduce communication. Let's rethink the equation of Tcomm.
 
 This equation refers to a 3-dimensional partition. For a better communication parallelization the size of messages should be equal:
 
-![equation]( )
+![equation](https://github.com/GeorgePapageorgakis/Atmospheric-model-MPI/blob/master/figures/equation.jpg)
 
 So we get a criterion for the division.
 We also note the z partition indirectly affects the problem (as it forces a change in the other partitions).
@@ -126,4 +128,4 @@ However, the abolition of both is indeed very advantageous: no communication is 
 
 An example of the elements of each rank (halo elements).
 
-![tiles]( )
+![tiles](https://github.com/GeorgePapageorgakis/Atmospheric-model-MPI/blob/master/figures/tiles.jpg)
