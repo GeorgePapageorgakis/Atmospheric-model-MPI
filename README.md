@@ -20,6 +20,7 @@ In the present work three variables:
 ![9 point Stencil](https://github.com/GeorgePapageorgakis/Atmospheric-model-MPI/blob/master/figures/stencil.jpg)
 
 Calculations and distinct communications:
+
 1. Horizontal nine-point stencil
 	Calculation of value in position xi, j of the grid in year t + 1 (update) as follows:
 	(Jacobi finite difference method)
