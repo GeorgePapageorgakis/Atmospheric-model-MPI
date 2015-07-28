@@ -26,13 +26,12 @@ Calculations and distinct communications:
 ![9 point Stencil](https://github.com/GeorgePapageorgakis/Atmospheric-model-MPI/blob/master/figures/stencil2.jpg)
 	
 ![equation](https://github.com/GeorgePapageorgakis/Atmospheric-model-MPI/blob/master/figures/x_i_j.jpg)
-	
-	Vertically, in our problem, there is no communication, only calculation based on the 
-	position in the grid: y (x) = a * pow(x, n), n = 10
+Vertically, in our problem, there is no communication, only calculation based on the position in the grid: 
+y (x) = a * pow(x, n), n = 10
 	
 2. Calculation magazines of the total mass of the atmosphere, to confirm that the simulation works correctly.
 	
-	![equation 2](https://github.com/GeorgePapageorgakis/Atmospheric-model-MPI/blob/master/figures/total%20mass.jpg)
+![equation 2](https://github.com/GeorgePapageorgakis/Atmospheric-model-MPI/blob/master/figures/total%20mass.jpg)
 	
 	Where the mass at grid point (i, j, k).
 	
