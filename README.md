@@ -6,7 +6,6 @@ describing, in this case, the dynamics of the atmosphere. The behavior of the eq
 in continuous real space, approached from the behavior of a finite set of points in space.
 These points form a three-dimensional (3D) mesh:
 
-
 ![Atmo cube](https://github.com/GeorgePapageorgakis/Atmospheric-model-MPI/blob/master/figures/asd.jpg)
 
 The grid is periodic in the x, y axes, whereby the point (0,0,0) is adjacent to (0, Ny-1, 0) 
