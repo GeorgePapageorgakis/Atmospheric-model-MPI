@@ -23,10 +23,9 @@ Calculations and distinct communications:
 1. Horizontal nine-point stencil
 	Calculation of value in position xi, j of the grid in year t + 1 (update) as follows:
 	(Jacobi finite difference method)
+![9 point Stencil](https://github.com/GeorgePapageorgakis/Atmospheric-model-MPI/blob/master/figures/stencil2.jpg)
 	
-	![9 point Stencil](https://github.com/GeorgePapageorgakis/Atmospheric-model-MPI/blob/master/figures/stencil2.jpg)
-	
-	![equation](https://github.com/GeorgePapageorgakis/Atmospheric-model-MPI/blob/master/figures/x_i_j.jpg)
+![equation](https://github.com/GeorgePapageorgakis/Atmospheric-model-MPI/blob/master/figures/x_i_j.jpg)
 	
 	Vertically, in our problem, there is no communication, only calculation based on the 
 	position in the grid: y (x) = a * pow(x, n), n = 10
