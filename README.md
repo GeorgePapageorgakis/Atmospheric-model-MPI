@@ -24,11 +24,13 @@ Calculations and distinct communications:
 **1**.Horizontal nine-point stencil
 	Calculation of value in position xi, j of the grid in year t + 1 (update) as follows:
 	(Jacobi finite difference method)
+	
 ![9 point Stencil](https://github.com/GeorgePapageorgakis/Atmospheric-model-MPI/blob/master/figures/stencil2.jpg)
 	
 ![equation](https://github.com/GeorgePapageorgakis/Atmospheric-model-MPI/blob/master/figures/x_i_j.jpg)
 
-Vertically, in our problem, there is no communication, only calculation based on the position in the grid: 
+Vertically, in our problem, there is no communication, only calculation based on the position in the grid:
+ 
 y (x) = a * pow(x, n), n = 10
 	
 **2**.Calculation magazines of the total mass of the atmosphere, to confirm that the simulation works correctly.
@@ -78,7 +80,50 @@ multiplies the size of messages and ultimately plays a significant role in the c
 
 
 **Theoretical calculation**
+
 In our program there is full support three-dimensional segmentation of data. In each dimension, the segmentation units are called partitions (and by extension the crowds xpc / ypc / zpc of x / y / z partition count). The condition to operate the partition is the amount of data in each dimension is a multiple of the corresponding plurality of partition unit so that each unit getting equal data with a simple division.
 
 As mentioned above, the typical dimensions of the problem are:
 
+Let's define and counterparts of segmentation units, namely those that exist in each MPI process:
+
+![nxnynz]()
+
+Processing times are:
+
+![Tc]( )
+
+where **internal** are the elements that do not require previous communication to calculate and the rest busywait / external.
+
+Considering the network processor has sufficient capacity in relation to our needs, we will assume that all communications may be done in parallel. Therefore, the communication time will not be equal to the set of messages, but with the maximum message:
+
+![Tcomm]( )
+
+where ts is the time constant of each message, tw the message time per byte, 3 is the number of doubles in our struct, and 8 is the sizeof(double).
+
+The calculation of processing and communication time, in the non-blocking communication, starts immediately. The calculation of internal data follows, then there are
+MPI_Wait to calculate the rest. Thus, the internal processing time spans a portion of the communication time:
+
+![T]( )
+
+At this point the parallel communication and computation makes a further theoretical calculation (speedup and efficiency) difficult. We shall confine ourselves to comparing the theoretical time with the sampled time.
+
+
+The processing time is inevitable since the arithmetic operations must occur.
+Therefore, we try to reduce communication. Let's rethink the equation of Tcomm.
+
+This equation refers to a 3-dimensional partition. For a better communication parallelization the size of messages should be equal:
+
+![equation]( )
+
+So we get a criterion for the division.
+We also note the z partition indirectly affects the problem (as it forces a change in the other partitions).
+In addition, removing only the x- or y- partition has a real effect in communication time. One message will be large, and the other would virtually not exist, eliminating the possibility of parallel communication.
+
+However, the abolition of both is indeed very advantageous: no communication is required! This results from the complete absence of communication in the z-axis.
+
+**Code implementation and Tiles**
+
+An example of the elements of each rank (halo elements).
+
+![tiles]( )
