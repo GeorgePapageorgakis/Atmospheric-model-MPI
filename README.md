@@ -35,14 +35,13 @@ y (x) = a * pow(x, n), n = 10
 	
 ![equation 2](https://github.com/GeorgePapageorgakis/Atmospheric-model-MPI/blob/master/figures/total%20mass.jpg)
 	
-	Where the mass at grid point (i, j, k).
+Where the mass at grid point (i, j, k).
 	
-	Details: We consider the mass of the atmosphere is divided into processes. It does not change during the 
-	execution, but every few steps-repetitions will become reduce to determine that there is no difference.
+Details: We consider the mass of the atmosphere is divided into processes. It does not change during the execution, but every few steps-repetitions will become reduce to determine that there is no difference.
 	
 3.Calculations in Physics.
-	y(x) = a * pow(x, n), n = 10
-	If any operation takes from one grid point then an important communication.
+y(x) = a * pow(x, n), n = 10
+If any operation takes from one grid point then an important communication.
 	
 The communication related to the stencil is distributed, so it may proceed simultaneously. 
 The same applies for the operation of the universal communications (air mass calculation).
