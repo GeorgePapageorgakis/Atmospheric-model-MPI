@@ -21,7 +21,7 @@ In the present work three variables:
 
 Calculations and distinct communications:
 
-1. Horizontal nine-point stencil
+1.Horizontal nine-point stencil
 	Calculation of value in position xi, j of the grid in year t + 1 (update) as follows:
 	(Jacobi finite difference method)
 ![9 point Stencil](https://github.com/GeorgePapageorgakis/Atmospheric-model-MPI/blob/master/figures/stencil2.jpg)
@@ -31,7 +31,7 @@ Calculations and distinct communications:
 Vertically, in our problem, there is no communication, only calculation based on the position in the grid: 
 y (x) = a * pow(x, n), n = 10
 	
-2. Calculation magazines of the total mass of the atmosphere, to confirm that the simulation works correctly.
+2.Calculation magazines of the total mass of the atmosphere, to confirm that the simulation works correctly.
 	
 ![equation 2](https://github.com/GeorgePapageorgakis/Atmospheric-model-MPI/blob/master/figures/total%20mass.jpg)
 	
@@ -40,7 +40,7 @@ y (x) = a * pow(x, n), n = 10
 	Details: We consider the mass of the atmosphere is divided into processes. It does not change during the 
 	execution, but every few steps-repetitions will become reduce to determine that there is no difference.
 	
-3. Calculations in Physics.
+3.Calculations in Physics.
 	y(x) = a * pow(x, n), n = 10
 	If any operation takes from one grid point then an important communication.
 	
