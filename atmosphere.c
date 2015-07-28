@@ -35,8 +35,8 @@ struct element{
 // Constants
 const 	double total_mass = 1000.0;
 const 	double a		  = 2.718281828; 
-		double mass_reduced;
-		double rank_mass;
+	double mass_reduced;
+	double rank_mass;
 		
 void prtdat	(char *fnam);
 void update	(int, int, int, struct element *, struct element *);
@@ -69,22 +69,22 @@ MPI_Datatype 	xmargindata,	ymargindata,	right_left_type,down_up_type;
 MPI_Status 		stat_recv[4],	stat_send[4];
 
 double	time_start_internal,	time_start_busywait,	time_start_external,	time_start_mass_reduce,
-		time_start_sendrecv,	time_start_waitsend,	duration_internal,  	duration_busywait,  
-		duration_external,  	duration_mass_reduce,  	duration_sendrecv,  	duration_waitsend,
-		total_internal,     	total_busywait,     	total_external,     	total_mass_reduce,     
-		total_sendrecv,     	total_waitsend,			total_accounted_for;
+	time_start_sendrecv,	time_start_waitsend,	duration_internal,  	duration_busywait,  
+	duration_external,  	duration_mass_reduce,  	duration_sendrecv,  	duration_waitsend,
+	total_internal,     	total_busywait,     	total_external,     	total_mass_reduce,     
+	total_sendrecv,     	total_waitsend,		total_accounted_for;
 FILE * fp;
 int reduce_frequency = 5;
 
 
 int main (int argc, char *argv[]){
-	MPI_Init		(&argc,&argv);
-    MPI_Comm_size	(MPI_COMM_WORLD,&numtasks);
-    MPI_Comm_rank	(MPI_COMM_WORLD,&rank);
+	MPI_Init	(&argc,&argv);
+    	MPI_Comm_size	(MPI_COMM_WORLD,&numtasks);
+    	MPI_Comm_rank	(MPI_COMM_WORLD,&rank);
 	STEPS	= 50;
-	NX		= 800;
-	NY		= 400;
-	NZ		= 30;
+	NX	= 800;
+	NY	= 400;
+	NZ	= 30;
 	x_partition_count = 2;
 	y_partition_count = 1;
 	z_partition_count = 1;
@@ -138,23 +138,23 @@ int main (int argc, char *argv[]){
 	MPI_Barrier(MPI_COMM_WORLD); //for printf to apper in order
 	// ================================START Data partition assignment================================
 	
-	x_length 	= NX/x_partition_count;		//Divide elements uniformly among partitions
-	x_rank		= rank % x_partition_count;	//rank, as is "partition rank"
-	x_start		= x_rank * x_length ;		//min
-	x_end		= (x_rank+1) * x_length - 1;
+	x_length = NX/x_partition_count;		//Divide elements uniformly among partitions
+	x_rank	 = rank % x_partition_count;		//rank, as is "partition rank"
+	x_start	 = x_rank * x_length ;			//min
+	x_end	 = (x_rank+1) * x_length - 1;
 
-	y_length 	= NY/y_partition_count;
-	y_rank		= (rank  / x_partition_count ) % y_partition_count; //rank, as is "partition rank"
-	y_start		= y_rank * y_length;		//min
-	y_end		= (y_rank+1) * y_length - 1;
+	y_length = NY/y_partition_count;
+	y_rank	 = (rank  / x_partition_count ) % y_partition_count; //rank, as is "partition rank"
+	y_start	 = y_rank * y_length;			//min
+	y_end	 = (y_rank+1) * y_length - 1;
 		
-	z_length 	= NZ/z_partition_count;	
-	z_rank		= rank / (x_partition_count*y_partition_count);
-	z_start		= z_rank * z_length;		//min
-	z_end		= (z_rank+1) * z_length - 1;
+	z_length = NZ/z_partition_count;	
+	z_rank	 = rank / (x_partition_count*y_partition_count);
+	z_start	 = z_rank * z_length;			//min
+	z_end	 = (z_rank+1) * z_length - 1;
 	
 	printf("Rank %d range: x(%d-%d) of %d, y(%d-%d) of %d, z(%d-%d) of %d\n",
-												rank, x_start, x_end, NX, y_start, y_end, NY, z_start, z_end, NZ);
+					rank, x_start, x_end, NX, y_start, y_end, NY, z_start, z_end, NZ);
 	//================================END Data partition assignment================================
 
 	
@@ -173,10 +173,10 @@ int main (int argc, char *argv[]){
 	for (iz=0; iz<z_length; ++iz)
 		for (iy=0; iy<y_length+4; ++iy)
 			for (ix=0; ix<x_length+4; ++ix){
-				(u[0]+c(ix,iy,iz))->mass 		= total_mass/numtasks/NX/NY/NZ;
+				(u[0]+c(ix,iy,iz))->mass 	= total_mass/numtasks/NX/NY/NZ;
 				(u[0]+c(ix,iy,iz))->xy_value 	= (double)(rand() % 100);
 				(u[0]+c(ix,iy,iz))->z_value 	=  a*pow((u[0]+c(ix,iy,iz))->xy_value,10.0);
-				(u[1]+c(ix,iy,iz))->mass 		= total_mass/numtasks/NX/NY/NZ;
+				(u[1]+c(ix,iy,iz))->mass 	= total_mass/numtasks/NX/NY/NZ;
 				(u[1]+c(ix,iy,iz))->xy_value 	= 0.0;
 			}
 	iu = 0; //iz: Track which of the u arrays is the "old"
@@ -192,9 +192,9 @@ int main (int argc, char *argv[]){
 	MPI_Type_commit (&xmargindata);
 	MPI_Type_vector (y_length, 6, 3*(x_length+4), MPI_DOUBLE, &ymargindata);
 	MPI_Type_commit (&ymargindata);
-	sizes[2]				= 3*(x_length+4);
-	sizes[1]				= y_length+4;
-	sizes[0]				= z_length;
+	sizes[2]		= 3*(x_length+4);
+	sizes[1]		= y_length+4;
+	sizes[0]		= z_length;
 	subsizes_right_left[2]	= 3*2;
 	subsizes_right_left[1]	= y_length;
 	subsizes_right_left[0]	= z_length;
@@ -203,9 +203,9 @@ int main (int argc, char *argv[]){
 	starts_right_left[2]	= 0;
 	MPI_Type_create_subarray(3, sizes, subsizes_right_left, starts_right_left, MPI_ORDER_C, MPI_DOUBLE, &right_left_type);
 	MPI_Type_commit (&right_left_type);
-	subsizes_down_up[2]		= 3*x_length;
-	subsizes_down_up[1]		= 2;
-	subsizes_down_up[0]		= z_length;
+	subsizes_down_up[2]	= 3*x_length;
+	subsizes_down_up[1]	= 2;
+	subsizes_down_up[0]	= z_length;
 	MPI_Type_create_subarray(3, sizes, subsizes_down_up, starts_right_left, MPI_ORDER_C, MPI_DOUBLE, &down_up_type);
 	MPI_Type_commit (&down_up_type);
 	
@@ -262,8 +262,7 @@ int main (int argc, char *argv[]){
 		#pragma omp parallel
 		{
 			#pragma omp for //collapse (2)
-				for(iz=0; iz<z_length; ++iz) //full z range
-				{
+				for(iz=0; iz<z_length; ++iz){ //full z range
 					//printf("Iteration %d is assigned to thread %d\n", iz, omp_get_thread_num());
 					//disregard both the data waiting to be received (width 2 perimeter) and the ones 
 					//who need them to be calculated (another 2 width perimeter)(central elements)
@@ -365,7 +364,7 @@ int main (int argc, char *argv[]){
 		100.0 * total_waitsend   /total_accounted_for);
 	if(rank==0)	{
 		fprintf(fp,"Total/Sendrecv/internal/busywait/external/mass reduce/waitsend durations:\n%f\t%f\t%f\t%f\t%f\t%f\t%f\n\n\n",
-						total_accounted_for, total_sendrecv, total_internal, total_busywait, total_external, total_mass_reduce, total_waitsend);
+				total_accounted_for, total_sendrecv, total_internal, total_busywait, total_external, total_mass_reduce, total_waitsend);
 		fclose(fp);
 	}
 
@@ -384,14 +383,14 @@ int c(int x,int y,int z){
  ****************************************************************************/
 void update(int x, int y, int z, struct element *u1, struct element *u2){
 	(u2+c(x,y,z))->xy_value = (	(8*(u1+c(x,y,z))->xy_value)+
-								(u1+c(x-2,y,z))->xy_value+
-								(u1+c(x-1,y,z))->xy_value+
-								(u1+c(x+1,y,z))->xy_value+
-								(u1+c(x+2,y,z))->xy_value+
-								(u1+c(x,y-2,z))->xy_value+
-								(u1+c(x,y-1,z))->xy_value+
-								(u1+c(x,y+1,z))->xy_value+
-								(u1+c(x,y+2,z))->xy_value)/16.0;	
+					(u1+c(x-2,y,z))->xy_value+
+					(u1+c(x-1,y,z))->xy_value+
+					(u1+c(x+1,y,z))->xy_value+
+					(u1+c(x+2,y,z))->xy_value+
+					(u1+c(x,y-2,z))->xy_value+
+					(u1+c(x,y-1,z))->xy_value+
+					(u1+c(x,y+1,z))->xy_value+
+					(u1+c(x,y+2,z))->xy_value)/16.0;	
 	(u2+c(x,y,z))->z_value = a*pow((u2+c(x,y,z))->xy_value,10.0);
 	return;
 }
