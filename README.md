@@ -73,5 +73,6 @@ Having as the picture 3D mesh from above:
 * each processor will take a piece of the surface (eg. 100x50 grid points / # processors) and their respective columns.
 
 * In the vertical z axis does not occur any form of communication, however, the corresponding size of partition 
-multiplies the size of messages and ultimately plays his role in the choice of partition, as we will see below 
-in the analysis of performance.
+multiplies the size of messages and ultimately plays a significant role in the choice of partition, as we will see below in the analysis of performance.
+
+
