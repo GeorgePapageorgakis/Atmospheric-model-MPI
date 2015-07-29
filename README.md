@@ -155,6 +155,7 @@ The times internal/comm/busywait-external/theoretical(sum) correspond to the the
 Ttheoritical / Texperimental * 100%: Here we compare the theory with practice. We would have a successful match for values that are ​​close to 100. We note two ways in which the situation differs:
 
 **1**.In areas of high performance (small number of processes and / or a large number of data) instead of values ​​are near 100, there are values near 200.
+
 **2**.In areas of low performance, experimental time is much greater than the theoretical. This correlates with the constant ts and tw. 
 In small problem sizes/multiple processors we expect a larger portion of time to be in communication.
 
