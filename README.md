@@ -143,8 +143,8 @@ The graph Efficiency(P) is for the scaling of processors. As we expected, we not
 
 The graph Efficiency(Data) is for the scaling data. We observe increased performance by increasing data. The increase is lower for most processes.
 
-![tiles]()
-![tiles]()
+![E(data)](https://github.com/GeorgePapageorgakis/Atmospheric-model-MPI/blob/master/figures/E%28data%29.jpg)
+![E(p)](https://github.com/GeorgePapageorgakis/Atmospheric-model-MPI/blob/master/figures/E%28p%29.jpg)
 
 **Theoretical calculations**
 
@@ -154,14 +154,14 @@ The times internal/comm/busywait-external/theoretical(sum) correspond to the the
 
 Ttheoritical / Texperimental * 100%: Here we compare the theory with practice. We would have a successful match for values that are ​​close to 100. We note two ways in which the situation differs:
 
-**1**.In areas of high performance (small number of processes and / or a large number of data) instead of values ​​are near 100, there are values ​​near 200.
+**1**.In areas of high performance (small number of processes and / or a large number of data) instead of values ​​are near 100, there are values near 200.
 **2**.In areas of low performance, experimental time is much greater than the theoretical. This correlates with the constant ts and tw. 
 In small problem sizes/multiple processors we expect a larger portion of time to be in communication.
 
 *In the MPI measurements ts = 0.8ms, tw = 0.004ms / byte
 *From colleague Measurements: ts = 82ms, tw = 0.2ms / byte
 
-The difference is up to two orders of magnitude. However, this is not enough to "fill the gap". By testing at the entrance of ts / tw, to reach the values ​​approaching theoretical practices should be 3.5 orders of magnitude larger. Of course, there is still variation in the values, but not so great! This is confirmed by the fact that running the program without calculations, waiting times (only for send / recv wait) is much larger than the values ​​calculated from mpptest.
+The difference is up to two orders of magnitude. However, this is not enough to "fill the gap". By testing at the entrance of ts / tw, to reach the values approaching theoretical practices should be 3.5 orders of magnitude larger. Of course, there is still variation in the values, but not so great! This is confirmed by the fact that running the program without calculations, waiting times (only for send / recv wait) is much larger than the values calculated from mpptest.
 The last two tables are constructed to expose the real problem: For the given problem sizes used, although the theory predicts that the calculation of the internal elements will occupy 99% of the total time in all cases, in practice the results are much more different.
 
 **Reduce**
@@ -169,7 +169,7 @@ The last two tables are constructed to expose the real problem: For the given pr
 Here are measurements and graphs relative to the Reduce in the total mass of the problem. We observe an expected linearity. Apparently this calculation step has a fixed time cost, which has linearity both in terms of frequency and in the size of the remaining problem. 
 The more often it is called, the more time it requires in overall, and the bigger the data is, the calculations and communications of the remaining problem, the more negligible time it takes for reduce.
 
-![reduce]()
+![reduce](https://github.com/GeorgePapageorgakis/Atmospheric-model-MPI/blob/master/figures/reduce.jpg)
 
 **Conclusions**
 
