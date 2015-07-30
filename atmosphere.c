@@ -110,11 +110,13 @@ int main (int argc, char *argv[]){
 	
 	if(rank == 0) {
 		printf("\n\n==================================\n==========SESSION START===========\n==================================\n"
-	        "Program size (x/y/z/steps): %d x %d x %d x %d\n"
-			"Partition grid (x/y/z): %d x %d x %d\n", NX, NY, NZ, STEPS, x_partition_count, y_partition_count, z_partition_count);
+	        	"Program size (x/y/z/steps): %d x %d x %d x %d\n"
+				"Partition grid (x/y/z): %d x %d x %d\n", 
+					NX, NY, NZ, STEPS, x_partition_count, y_partition_count, z_partition_count);
 		fp = fopen("log.txt", "a");
-		fprintf(fp,"%dx%dx%dx%d\n%dx%dx%d\n%d processes\n\n",NX, NY, NZ, STEPS, x_partition_count, y_partition_count, z_partition_count,
-															x_partition_count * y_partition_count * z_partition_count);
+		fprintf(fp,"%dx%dx%dx%d\n%dx%dx%d\n%d processes\n\n",
+				NX, NY, NZ, STEPS, x_partition_count, y_partition_count, z_partition_count,
+					x_partition_count * y_partition_count * z_partition_count);
 		if(!(NX && NY && NZ && x_partition_count && y_partition_count && z_partition_count)){
 			puts("Elements/Grid zero, cannot continue\n"\
 				"Use -x  <number> to input x elements count\n"\
@@ -179,7 +181,8 @@ int main (int argc, char *argv[]){
 				(u[1]+c(ix,iy,iz))->mass 	= total_mass/numtasks/NX/NY/NZ;
 				(u[1]+c(ix,iy,iz))->xy_value 	= 0.0;
 			}
-	iu = 0; //iz: Track which of the u arrays is the "old"
+	//iz: Track which of the u arrays is the "old"
+	iu = 0;
 	//sprintf(filename,"atm%ds%d.txt", rank, it);
 	//prtdat(filename);
 	//printf("Rank %d saving in %s\n", rank, filename);
@@ -261,7 +264,7 @@ int main (int argc, char *argv[]){
 		time_start_internal = MPI_Wtime();
 		#pragma omp parallel
 		{
-			#pragma omp for //collapse (2)
+			#pragma omp for
 				for(iz=0; iz<z_length; ++iz){ //full z range
 					//printf("Iteration %d is assigned to thread %d\n", iz, omp_get_thread_num());
 					//disregard both the data waiting to be received (width 2 perimeter) and the ones 
